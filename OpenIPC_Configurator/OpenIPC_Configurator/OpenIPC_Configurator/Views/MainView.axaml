@@ -1,0 +1,111 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:OpenIPC_Configurator.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             Height="800"
+             Width="500"
+             
+             x:Class="OpenIPC_Configurator.Views.MainView"
+             x:DataType="vm:MainViewModel">
+  <Design.DataContext>
+    <!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+    <vm:MainViewModel />
+  </Design.DataContext>
+
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Name="btnGet" Command="{Binding ConnectCommand}" Content="Fetch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="30" Margin="12,408,0,0"/>
+        <TextBox  Name="txtIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Height="23" Margin="12,379,0,0" Text="{Binding IPAddress}"/>
+        <Button Name="btnSend" Content="Upload" HorizontalAlignment="Left" VerticalAlignment="Top" Width="58" Height="30" Margin="142,408,0,0"/>
+        <TabControl Grid.Row="1" Name="TabControl1" HorizontalAlignment="Left" Height="367" VerticalAlignment="Top" Width="348" Margin="12,12,0,0">
+            <TabItem Header="WFB Settings">
+                <StackPanel Background="WhiteSmoke">
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="Frequency:"/> -->
+                    <!--     <TextBox Name="txtFreq" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="Power 24:"/> -->
+                    <!--     <TextBox Name="txtPower24" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="FECN:"/> -->
+                    <!--     <TextBox Name="txtFECN" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="MCS:"/> -->
+                    <!--     <TextBox Name="txtMCS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="FECK:"/> -->
+                    <!--     <TextBox Name="txtFECK" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="Frequency 24:"/> -->
+                    <!--     <TextBox Name="txtFreq24" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="LDPC:"/> -->
+                    <!--     <TextBox Name="txtLDPC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="STBC:"/> -->
+                    <!--     <TextBox Name="txtSTBC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
+                    <!-- </StackPanel> -->
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Camera Settings">
+                <StackPanel Background="WhiteSmoke">
+                    <StackPanel Margin="5">
+                        <Label Content="Resolution:"/>
+                        <TextBox Name="txtResolution" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Sensor:"/>
+                        <TextBox Name="txtSensor" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="FPS:"/>
+                        <TextBox Name="txtFPS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Luminance:"/>
+                        <TextBox Name="txtLuminance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Encode:"/>
+                        <TextBox Name="txtEncode" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Saturation:"/>
+                        <NumericUpDown Value="{Binding MajesticConfig.Image.Saturation}" Name="txtSaturation" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Bitrate:"/>
+                        <TextBox Name="txtBitrate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Hue:"/>
+                        <TextBox Name="txtHue" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Exposure:"/>
+                        <TextBox Name="txtExposure" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                    <StackPanel Margin="5">
+                        <Label Content="Contrast:"/>
+                        <NumericUpDown Name="txtContrast" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

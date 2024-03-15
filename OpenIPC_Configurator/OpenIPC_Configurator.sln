@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIPC_Configurator", "OpenIPC_Configurator\OpenIPC_Configurator\OpenIPC_Configurator.csproj", "{27FB5391-1041-4C44-995D-0589C09C4B29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIPC_Configurator.Android", "OpenIPC_Configurator\OpenIPC_Configurator.Android\OpenIPC_Configurator.Android.csproj", "{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenIPC_Configurator.Desktop", "OpenIPC_Configurator\OpenIPC_Configurator.Desktop\OpenIPC_Configurator.Desktop.csproj", "{FE3731B3-5F41-4152-A174-2C04153FB79C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{27FB5391-1041-4C44-995D-0589C09C4B29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FB5391-1041-4C44-995D-0589C09C4B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FB5391-1041-4C44-995D-0589C09C4B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FB5391-1041-4C44-995D-0589C09C4B29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A0E4E4C-6E6A-4913-BA7C-01C6C56CCC03}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{FE3731B3-5F41-4152-A174-2C04153FB79C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE3731B3-5F41-4152-A174-2C04153FB79C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE3731B3-5F41-4152-A174-2C04153FB79C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE3731B3-5F41-4152-A174-2C04153FB79C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
