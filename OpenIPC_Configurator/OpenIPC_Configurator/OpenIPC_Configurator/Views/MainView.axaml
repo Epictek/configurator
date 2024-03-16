@@ -4,9 +4,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:OpenIPC_Configurator.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             Height="800"
-             Width="500"
-             
              x:Class="OpenIPC_Configurator.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
@@ -14,20 +11,31 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-
-    
-    <Grid>
-        
+    <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Button Name="btnGet" Command="{Binding ConnectCommand}" Content="Fetch" HorizontalAlignment="Left" VerticalAlignment="Top" Width="60" Height="30" Margin="12,408,0,0"/>
-        <TextBox  Name="txtIP" HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Height="23" Margin="12,379,0,0" Text="{Binding IPAddress}"/>
-        <Button Name="btnSend" Content="Upload" HorizontalAlignment="Left" VerticalAlignment="Top" Width="58" Height="30" Margin="142,408,0,0"/>
-        <TabControl Grid.Row="1" Name="TabControl1" HorizontalAlignment="Left" Height="367" VerticalAlignment="Top" Width="348" Margin="12,12,0,0">
+        <ExperimentalAcrylicBorder Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
+            </ExperimentalAcrylicBorder.Material>
+
+        <StackPanel Orientation="Horizontal" Margin="10">
+            <TextBox Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
+            <Button Margin="5" Name="btnGet" Command="{Binding ConnectCommand}" Content="Fetch"/>
+        <Button Margin="5" Name="btnSend" Content="Upload"/>
+            
+        </StackPanel>
+            </ExperimentalAcrylicBorder>
+        <ExperimentalAcrylicBorder Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <ExperimentalAcrylicBorder.Material>
+                <ExperimentalAcrylicMaterial TintColor="#222222" MaterialOpacity="0.85" TintOpacity="1" />
+            </ExperimentalAcrylicBorder.Material>
+
+        <TabControl Grid.Row="1" Name="TabControl1">
             <TabItem Header="WFB Settings">
-                <StackPanel Background="WhiteSmoke">
+                <StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Frequency:"/> -->
                     <!--     <TextBox Name="txtFreq" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
@@ -63,10 +71,16 @@
                 </StackPanel>
             </TabItem>
             <TabItem Header="Camera Settings">
-                <StackPanel Background="WhiteSmoke">
+                <ScrollViewer Height="500">
+                    <StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Resolution:"/>
-                        <TextBox Name="txtResolution" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <ComboBox SelectedValue="{Binding MajesticConfig.Mjpeg.Size}" Name="txtResolution" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23">
+                            <ComboBoxItem>1280x720</ComboBoxItem>
+                            <ComboBoxItem>1920x1080</ComboBoxItem>
+                            <ComboBoxItem>3200x1800</ComboBoxItem>
+                            <ComboBoxItem>3840x2160</ComboBoxItem>
+                            </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Sensor:"/>
@@ -94,18 +108,21 @@
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Hue:"/>
-                        <TextBox Name="txtHue" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}" Name="txtHue" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Exposure:"/>
-                        <TextBox Name="txtExposure" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Name="txtExposure" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Contrast:"/>
-                        <NumericUpDown Name="txtContrast" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}" Name="txtContrast" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
                     </StackPanel>
-                </StackPanel>
+                        </StackPanel>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
+        </ExperimentalAcrylicBorder>
     </Grid>
+        
 </UserControl>
