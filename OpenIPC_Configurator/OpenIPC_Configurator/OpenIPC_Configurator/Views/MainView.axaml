@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:OpenIPC_Configurator.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
              x:Class="OpenIPC_Configurator.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
@@ -13,8 +13,8 @@
   </Design.DataContext>
     <Grid  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ExperimentalAcrylicBorder Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             <ExperimentalAcrylicBorder.Material>
@@ -23,8 +23,8 @@
 
         <StackPanel Orientation="Horizontal" Margin="10">
             <TextBox Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
-            <Button Margin="5" Name="btnGet" Command="{Binding ConnectCommand}" Content="Fetch"/>
-        <Button Margin="5" Name="btnSend" Content="Upload"/>
+            <Button Margin="5" Name="btnGet" Command="{Binding FetchCommand}" Content="Fetch"/>
+        <Button Margin="5" Name="btnSend" Command="{Binding SaveCommand}" Content="Upload"/>
             
         </StackPanel>
             </ExperimentalAcrylicBorder>
@@ -34,89 +34,108 @@
             </ExperimentalAcrylicBorder.Material>
 
         <TabControl Grid.Row="1" Name="TabControl1">
-            <TabItem Header="WFB Settings">
-                <StackPanel>
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="Frequency:"/> -->
-                    <!--     <TextBox Name="txtFreq" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="Power 24:"/> -->
-                    <!--     <TextBox Name="txtPower24" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="FECN:"/> -->
-                    <!--     <TextBox Name="txtFECN" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="MCS:"/> -->
-                    <!--     <TextBox Name="txtMCS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="FECK:"/> -->
-                    <!--     <TextBox Name="txtFECK" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="Frequency 24:"/> -->
-                    <!--     <TextBox Name="txtFreq24" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="LDPC:"/> -->
-                    <!--     <TextBox Name="txtLDPC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                    <!-- <StackPanel Margin="5"> -->
-                    <!--     <Label Content="STBC:"/> -->
-                    <!--     <TextBox Name="txtSTBC" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Height="23"/> -->
-                    <!-- </StackPanel> -->
-                </StackPanel>
-            </TabItem>
+            <!-- <TabItem Header="WFB Settings"> -->
+            <!--     <ScrollViewer VerticalScrollBarVisibility="Auto"> -->
+            <!--         <StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="Frequency:"/> -->
+            <!--             <TextBox Name="txtFreq"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="Power 24:"/> -->
+            <!--             <TextBox Name="txtPower24"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="FECN:"/> -->
+            <!--             <TextBox Name="txtFECN"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="MCS:"/> -->
+            <!--             <TextBox Name="txtMCS"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="FECK:"/> -->
+            <!--             <TextBox Name="txtFECK"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="Frequency 24:"/> -->
+            <!--             <TextBox Name="txtFreq24"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="LDPC:"/> -->
+            <!--             <TextBox Name="txtLDPC"  /> -->
+            <!--         </StackPanel> -->
+            <!--         <StackPanel Margin="5"> -->
+            <!--             <Label Content="STBC:"/> -->
+            <!--             <TextBox Name="txtSTBC"  /> -->
+            <!--         </StackPanel> -->
+            <!--     </StackPanel> -->
+            <!--         </ScrollViewer> -->
+            <!-- </TabItem> -->
             <TabItem Header="Camera Settings">
-                <ScrollViewer Height="500">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Resolution:"/>
-                        <ComboBox SelectedValue="{Binding MajesticConfig.Mjpeg.Size}" Name="txtResolution" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23">
+                        <ComboBox HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Size}" Name="txtResolution" >
                             <ComboBoxItem>1280x720</ComboBoxItem>
                             <ComboBoxItem>1920x1080</ComboBoxItem>
                             <ComboBoxItem>3200x1800</ComboBoxItem>
                             <ComboBoxItem>3840x2160</ComboBoxItem>
                             </ComboBox>
                     </StackPanel>
-                    <StackPanel Margin="5">
-                        <Label Content="Sensor:"/>
-                        <TextBox Name="txtSensor" HorizontalAlignment="Left" VerticalAlignment="Top" Width="266" Height="23"/>
-                    </StackPanel>
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="Sensor:"/> -->
+                    <!--     <TextBox Name="txtSensor" Text="{Binding MajesticConfig.Video0}"/> -->
+                    <!-- </StackPanel> -->
                     <StackPanel Margin="5">
                         <Label Content="FPS:"/>
-                        <TextBox Name="txtFPS" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="120" Minimum="20" Value="{Binding MajesticConfig.Video0.Fps}"  />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Luminance:"/>
-                        <TextBox Name="txtLuminance" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Luminance}" />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Encode:"/>
-                        <TextBox Name="txtEncode" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <ComboBox HorizontalAlignment="Stretch" Name="cmbCodec" SelectedValue="{Binding MajesticConfig.Video0.Codec}">
+                            <ComboBoxItem Content="h264"/>
+                            <ComboBoxItem Content="h265"/>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Saturation:"/>
-                        <NumericUpDown Value="{Binding MajesticConfig.Image.Saturation}" Name="txtSaturation" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Value="{Binding MajesticConfig.Image.Saturation}" Name="txtSaturation"/>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Bitrate:"/>
-                        <TextBox Name="txtBitrate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <ComboBox SelectedValueBinding="Content" SelectedItem="{Binding MajesticConfig.Video0.Bitrate, Mode=TwoWay}" HorizontalAlignment="Stretch">
+                            <ComboBoxItem Content="1024" />
+                            <ComboBoxItem Content="2048"/>
+                            <ComboBoxItem Content="3072"/>
+                            <ComboBoxItem Content="4096"/>
+                            <ComboBoxItem Content="5120"/>
+                            <ComboBoxItem Content="6144"/>
+                            <ComboBoxItem Content="7168"/>
+                            <ComboBoxItem Content="8192"/>
+                            <ComboBoxItem Content="9216"/>
+                            <ComboBoxItem Content="10240"/>
+                            <ComboBoxItem Content="11264"/>
+                            <ComboBoxItem Content="12288"/>
+                            <ComboBoxItem Content="13312"/>
+                        </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Hue:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}" Name="txtHue" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}" Name="txtHue"/>
                     </StackPanel>
-                    <StackPanel Margin="5">
-                        <Label Content="Exposure:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Name="txtExposure" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
-                    </StackPanel>
+                    <!-- <StackPanel Margin="5"> -->
+                    <!--     <Label Content="Exposure:"/> -->
+                    <!--     <NumericUpDown Increment="10" Maximum="100" Minimum="0" Name="txtExposure" Value="{Binding MajesticConfig.Image.ex}" /> -->
+                    <!-- </StackPanel> -->
                     <StackPanel Margin="5">
                         <Label Content="Contrast:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}" Name="txtContrast" HorizontalAlignment="Left" VerticalAlignment="Top" Width="161" Height="23"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}" Name="txtContrast"  />
                     </StackPanel>
                         </StackPanel>
                 </ScrollViewer>
