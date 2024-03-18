@@ -1,2 +1,78 @@
-derp: derp
-test: test
+system:
+  webPort: 80
+  httpsPort: 443
+  logLevel: debug
+  buffer: 1024
+  plugins: false
+isp:
+  antiFlicker: disabled
+image:
+  mirror: false
+  flip: false
+  rotate: 0
+  contrast: 50
+  hue: 50
+  saturation: 50
+  luminance: 50
+video0:
+  enabled: true
+  codec: h264
+  fps: 20
+  bitrate: 4096
+  rcMode: vbr
+  gopSize: 1
+video1:
+  enabled: false
+  codec: h264
+  size: 704x576
+  fps: 15
+jpeg:
+  enabled: true
+  qfactor: 50
+  fps: 5
+osd:
+  enabled: false
+  font: /usr/share/fonts/truetype/UbuntuMono-Regular.ttf
+  template: "%d.%m.%Y %H:%M:%S"
+  posX: 16
+  posY: 16
+audio:
+  enabled: false
+  volume: 30
+  srate: 8000
+  codec: opus
+  outputEnabled: false
+  outputVolume: 30
+rtsp:
+  enabled: true
+  port: 554
+nightMode:
+  enabled: false
+  irCutSingleInvert: false
+  colorToGray: true
+  irSensorPinInvert: false
+motionDetect:
+  enabled: false
+  visualize: false
+  debug: false
+records:
+  enabled: false
+  path: /mnt/mmcblk0p1/%F/%H.mp4
+  maxUsage: 95
+outgoing:
+  enabled: false
+watchdog:
+  enabled: true
+  timeout: 300
+hls:
+  enabled: false
+onvif:
+  enabled: false
+ipeye:
+  enabled: false
+youtube:
+  enabled: false
+netip:
+  enabled: false
+cloud:
+  enabled: false
