@@ -33,7 +33,7 @@
                 <ExperimentalAcrylicMaterial TintColor="#222222" MaterialOpacity="0.85" TintOpacity="1" />
             </ExperimentalAcrylicBorder.Material>
 
-        <TabControl Grid.Row="1" Name="TabControl1">
+        <TabControl IsVisible="{Binding IsLoaded}" Grid.Row="1" Name="TabControl1">
             <!-- <TabItem Header="WFB Settings"> -->
             <!--     <ScrollViewer VerticalScrollBarVisibility="Auto"> -->
             <!--         <StackPanel> -->
@@ -72,17 +72,13 @@
             <!--     </StackPanel> -->
             <!--         </ScrollViewer> -->
             <!-- </TabItem> -->
-            <TabItem Header="Camera Settings">
+            <TabItem  Header="Camera Settings">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Resolution:"/>
-                        <ComboBox HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Size}" Name="txtResolution" >
-                            <ComboBoxItem>1280x720</ComboBoxItem>
-                            <ComboBoxItem>1920x1080</ComboBoxItem>
-                            <ComboBoxItem>3200x1800</ComboBoxItem>
-                            <ComboBoxItem>3840x2160</ComboBoxItem>
-                            </ComboBox>
+                        <ComboBox ItemsSource="{Binding Resolutions}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Size, Mode=TwoWay}" Name="txtResolution" >
+                        </ComboBox>
                     </StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Sensor:"/> -->
@@ -98,9 +94,7 @@
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Encode:"/>
-                        <ComboBox HorizontalAlignment="Stretch" Name="cmbCodec" SelectedValue="{Binding MajesticConfig.Video0.Codec}">
-                            <ComboBoxItem Content="h264"/>
-                            <ComboBoxItem Content="h265"/>
+                        <ComboBox ItemsSource="{Binding Codecs}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Codec, Mode=TwoWay}">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
@@ -109,25 +103,12 @@
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Bitrate:"/>
-                        <ComboBox SelectedValueBinding="Content" SelectedItem="{Binding MajesticConfig.Video0.Bitrate, Mode=TwoWay}" HorizontalAlignment="Stretch">
-                            <ComboBoxItem Content="1024" />
-                            <ComboBoxItem Content="2048"/>
-                            <ComboBoxItem Content="3072"/>
-                            <ComboBoxItem Content="4096"/>
-                            <ComboBoxItem Content="5120"/>
-                            <ComboBoxItem Content="6144"/>
-                            <ComboBoxItem Content="7168"/>
-                            <ComboBoxItem Content="8192"/>
-                            <ComboBoxItem Content="9216"/>
-                            <ComboBoxItem Content="10240"/>
-                            <ComboBoxItem Content="11264"/>
-                            <ComboBoxItem Content="12288"/>
-                            <ComboBoxItem Content="13312"/>
+                        <ComboBox ItemsSource="{Binding BitRates}" SelectedValue="{Binding MajesticConfig.Video0.Bitrate, Mode=TwoWay}" HorizontalAlignment="Stretch">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Hue:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}" Name="txtHue"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}"/>
                     </StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Exposure:"/> -->
@@ -135,7 +116,7 @@
                     <!-- </StackPanel> -->
                     <StackPanel Margin="5">
                         <Label Content="Contrast:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}" Name="txtContrast"  />
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}"/>
                     </StackPanel>
                         </StackPanel>
                 </ScrollViewer>

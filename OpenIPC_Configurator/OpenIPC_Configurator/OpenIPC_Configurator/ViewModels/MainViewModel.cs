@@ -19,9 +19,35 @@ public class MainViewModel : ViewModelBase
 {
     public Dictionary<string, object> MajesticConfigDynamic { get; set; }
     
+    public int[] BitRates { get; } =
+    [
+        1024,
+        2048,
+        3072,
+        4096,
+        5120,
+        6144,
+        7168,
+        8192,
+        9216,
+        10240,
+        11264,
+        12288,
+        13312
+    ];
     
-    private MajesticConfig? _majesticConfig = null;
-    public MajesticConfig? MajesticConfig
+    public string[] Resolutions { get; } =
+    [
+        "1280x720",
+        "1920x1080",
+        "3200x1800",
+        "3840x2160"
+    ];
+
+    public string[] Codecs { get; } = ["h264", "h265"];
+    
+    private MajesticConfig _majesticConfig = new MajesticConfig();
+    public MajesticConfig MajesticConfig
     {
         get => _majesticConfig;
         set => this.RaiseAndSetIfChanged(ref _majesticConfig, value);
@@ -31,12 +57,26 @@ public class MainViewModel : ViewModelBase
     
     public WfbConfig WfbConfig { get; set; }
 
-    public string IPAddress { get; set; } = "127.0.0.1";
-   
     
+    private string _ipAddress = "192.168.0.1";
+
+    public string IPAddress
+    {
+        get => _ipAddress;
+        set => this.RaiseAndSetIfChanged(ref _ipAddress, value);
+    }
+
     public ICommand FetchCommand { get; }
     public ICommand SaveCommand { get; }
 
+    private bool isLoaded = false;
+    public bool IsLoaded
+    {
+        get => isLoaded;
+        set => this.RaiseAndSetIfChanged(ref isLoaded, value);
+    }
+ 
+    
     public MainViewModel()
     {
         FetchCommand = ReactiveCommand.Create(() =>
@@ -45,7 +85,7 @@ public class MainViewModel : ViewModelBase
         });
         SaveCommand = ReactiveCommand.Create(() =>
         {
-            SaveClicked();
+            _ = SaveClicked();
         });
 
     }
@@ -56,63 +96,70 @@ public class MainViewModel : ViewModelBase
     const string USER = "root";
     const string PASSWORD = "12345";
 
-    // async Task ConnectClicked()
-    // {
-    //     var cts = new CancellationTokenSource();
-    //     var scp = new ScpClient(new ConnectionInfo(IPAddress, USER, new PasswordAuthenticationMethod(USER, PASSWORD)));
-    //
-    //     try
-    //     {
-    //         await scp.ConnectAsync(cts.Token);
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //        return; 
-    //     }
-    //
-    //     try
-    //     {
-    //         var majesticStream = new MemoryStream();
-    //
-    //         scp.Download(MAJESTIC_CONF_LOCATION, majesticStream);
-    //
-    //         LoadMajesticYaml(majesticStream);
-    //
-    //         var yaml = MajesticYamlToString();
-    //
-    //         byte[] byteArray = Encoding.UTF8.GetBytes(yaml);
-    //         await using MemoryStream stream = new MemoryStream(byteArray);
-    //         scp.Upload(stream, MAJESTIC_CONF_LOCATION);
-    //         
-    //     }
-    //     catch (Exception ex)
-    //     {
-    //         Console.Error.WriteLine(ex) ;
-    //     }
-    // }
-    
-    
     async Task FetchClicked()
-    { try
-        {
+    {
+            var cts = new CancellationTokenSource();
+            var scp = new ScpClient(new ConnectionInfo(IPAddress, USER, new PasswordAuthenticationMethod(USER, PASSWORD)));
+            
+            try
+            {
+                await scp.ConnectAsync(cts.Token);
+            }
+            catch (Exception ex)
+            {
+               return; 
+            }
+            
+            try
+            {
+                var majesticStream = new MemoryStream();
+            
+                scp.Download(MAJESTIC_CONF_LOCATION, majesticStream);
 
-            var majesticStream = File.OpenRead("majestic.yaml");
-            LoadMajesticYaml(majesticStream);
+                IsLoaded = true;
+                scp.Dispose();
 
-        }
-        catch (Exception ex)
-        {
-            Console.Error.WriteLine(ex) ;
-        }
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex) ;
+            }
     }
 
 
-    void SaveClicked()
+    async Task SaveClicked()
     {
-        var yaml = MajesticYamlToString();
+        var cts = new CancellationTokenSource();
+        var scp = new ScpClient(new ConnectionInfo(IPAddress, USER, new PasswordAuthenticationMethod(USER, PASSWORD)));
+            
+        try
+        {
+            await scp.ConnectAsync(cts.Token);
+        }
+        catch (Exception ex)
+        {
+            return; 
+        }
 
-        Console.WriteLine(yaml);            
+        try
+        {
+            //backup current majestic.yaml
+            var path = Path.Join(Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile), "OpenIPC_Configurator");
+            Directory.CreateDirectory(path);
+            var file =  File.OpenWrite(Path.Join(path, $"majestic-{DateTime.Now:u}.yaml"));
+            scp.Download(MAJESTIC_CONF_LOCATION, file);
 
+            
+            var yaml = MajesticYamlToString();
+            byte[] byteArray = Encoding.UTF8.GetBytes(yaml);
+            await using MemoryStream stream = new MemoryStream(byteArray);
+            scp.Upload(stream, MAJESTIC_CONF_LOCATION);
+            scp.Dispose();
+        }
+        catch (Exception ex)
+        {
+            // ignored
+        }
     }
     
     void LoadMajesticYaml(Stream stream)
@@ -123,17 +170,8 @@ public class MainViewModel : ViewModelBase
             .IgnoreUnmatchedProperties()
             .Build();
 
-        // Deserialize YAML to object
         using var reader = new StreamReader(stream);
         MajesticConfig = deserializer.Deserialize<MajesticConfig>(reader);
-        // if (MajesticConfigDynamic == null)
-        // {
-        //     MajesticConfigDynamic = new Dictionary<string, object>();
-        //     MajesticConfig = new MajesticConfig();
-        //     return;
-        // }
-        //
-        // MajesticConfig = MajesticConfigDynamic.ToObject<MajesticConfig>();
 
     }
 
@@ -144,9 +182,8 @@ public class MainViewModel : ViewModelBase
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
 
-        MajesticConfigDynamic["derp"] = "derp";
         
-        return serializer.Serialize(MajesticConfigDynamic);
+        return serializer.Serialize(MajesticConfig);
 
     }
 
