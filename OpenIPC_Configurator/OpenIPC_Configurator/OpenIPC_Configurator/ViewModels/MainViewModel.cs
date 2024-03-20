@@ -18,6 +18,38 @@ namespace OpenIPC_Configurator.ViewModels;
 public class MainViewModel : ViewModelBase
 {
     public Dictionary<string, object> MajesticConfigDynamic { get; set; }
+   
+    public Dictionary<string, int> Frequencies { get; } = new Dictionary<string, int>()
+    {
+        {"5180 MHz", 36},
+        {"5200 MHz", 40},
+        {"5220 MHz", 44},
+        {"5240 MHz", 48},
+        {"5260 MHz", 52},
+        {"5280 MHz", 56},
+        {"5300 MHz", 60},
+        {"5320 MHz", 64},
+        {"5500 MHz", 100},
+        {"5520 MHz", 104},
+        {"5540 MHz", 108},
+        {"5560 MHz", 112},
+        {"5580 MHz", 116},
+        {"5600 MHz", 120},
+        {"5620 MHz", 124},
+        {"5640 MHz", 128},
+        {"5660 MHz", 132},
+        {"5680 MHz", 136},
+        {"5700 MHz", 140},
+        {"5720 MHz", 144},
+        {"5745 MHz", 149},
+        {"5765 MHz", 153},
+        {"5785 MHz", 157},
+        {"5805 MHz", 161},
+        {"5825 MHz", 165},
+        {"5845 MHz", 169},
+        {"5865 MHz", 173},
+        {"5885 MHz", 177}
+    };
     
     public int[] BitRates { get; } =
     [
@@ -45,17 +77,21 @@ public class MainViewModel : ViewModelBase
     ];
 
     public string[] Codecs { get; } = ["h264", "h265"];
-    
-    private MajesticConfig _majesticConfig = new MajesticConfig();
+
+    private MajesticConfig _majesticConfig;
     public MajesticConfig MajesticConfig
     {
         get => _majesticConfig;
         set => this.RaiseAndSetIfChanged(ref _majesticConfig, value);
     }
 
-    
-    
-    public WfbConfig WfbConfig { get; set; }
+    private WfbConfig _wfbConfig = new WfbConfig();
+
+    public WfbConfig WfbConfig
+    {
+        get => _wfbConfig;
+        set => this.RaiseAndSetIfChanged(ref _wfbConfig, value);
+    }
 
     
     private string _ipAddress = "192.168.0.1";
@@ -69,7 +105,7 @@ public class MainViewModel : ViewModelBase
     public ICommand FetchCommand { get; }
     public ICommand SaveCommand { get; }
 
-    private bool isLoaded = false;
+    private bool isLoaded = true;
     public bool IsLoaded
     {
         get => isLoaded;

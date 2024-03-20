@@ -2,20 +2,13 @@ namespace OpenIPC_Configurator.Models;
 
 public class WfbConfig
 {
-    public string Wlan { get; set; }
-    public string Region { get; set; }
-    public int Channel { get; set; }
-    public int TxPower { get; set; }
-    public int DriverTxPowerOverride { get; set; }
-    public int Bandwidth { get; set; }
-    public int Stbc { get; set; }
-    public int Ldpc { get; set; }
-    public int McsIndex { get; set; }
-    public int Stream { get; set; }
-    public long LinkId { get; set; }
-    public int UdpPort { get; set; }
-    public int FecK { get; set; }
-    public int FecN { get; set; }
-    public int FecTimeout { get; set; }
-    public string GuardInterval { get; set; }
+    public string channel { get; set; } = "";
+    public string driver_txpower_override { get; set; } = "";
+    public int frequency { get; set; } = 0;
+    public int txpower { get; set; }
+    public bool stbc { get; set; }
+    public int ldpc { get; set; }
+    public int mcs_index { get; set; }
+    public int fec_k { get; set; }
+    public int fec_n { get; set; }
 }

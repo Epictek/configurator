@@ -22,7 +22,7 @@
             </ExperimentalAcrylicBorder.Material>
 
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBox Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
+            <TextBox  Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
             <Button Margin="5" Name="btnGet" Command="{Binding FetchCommand}" Content="Fetch"/>
         <Button Margin="5" Name="btnSend" Command="{Binding SaveCommand}" Content="Upload"/>
             
@@ -34,13 +34,46 @@
             </ExperimentalAcrylicBorder.Material>
 
         <TabControl IsVisible="{Binding IsLoaded}" Grid.Row="1" Name="TabControl1">
-            <!-- <TabItem Header="WFB Settings"> -->
-            <!--     <ScrollViewer VerticalScrollBarVisibility="Auto"> -->
-            <!--         <StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="Frequency:"/> -->
-            <!--             <TextBox Name="txtFreq"  /> -->
-            <!--         </StackPanel> -->
+            <TabItem Header="WiFi Settings">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+            <StackPanel Margin="5">
+                <Label Content="5.8GHz Frequency:"/>
+            <ComboBox HorizontalAlignment="Stretch" SelectedValueBinding="{Binding Value}" SelectedValue="{Binding WfbConfig.frequency, Mode=TwoWay}" ItemsSource="{Binding Frequencies}" DisplayMemberBinding="{Binding Key}"/>
+            </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="5.8GHz TX Power:"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_k}"  />
+                </StackPanel>
+ 
+                <StackPanel Margin="5">
+                    <Label Content="2.4GHz Frequency:"/>
+                    <ComboBox HorizontalAlignment="Stretch" SelectedValueBinding="{Binding Value}" SelectedValue="{Binding WfbConfig.driver_txpower_override, Mode=TwoWay}" ItemsSource="{Binding Frequencies}" DisplayMemberBinding="{Binding Key}"/>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="2.4GHz TX Power:"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_k}"  />
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="MCS INDEX:"/>
+                    <NumericUpDown Increment="1" Maximum="9" Minimum="0" Value="{Binding WfbConfig.mcs_index}"  />
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <CheckBox IsChecked="{Binding WfbConfig.stbc}">STBC</CheckBox>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <CheckBox IsChecked="{Binding WfbConfig.ldpc}">LDPC</CheckBox>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="FEC K"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_k}"  />
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="FEC N"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_n}"  />
+                </StackPanel>
+ 
+                
             <!--         <StackPanel Margin="5"> -->
             <!--             <Label Content="Power 24:"/> -->
             <!--             <TextBox Name="txtPower24"  /> -->
@@ -69,9 +102,9 @@
             <!--             <Label Content="STBC:"/> -->
             <!--             <TextBox Name="txtSTBC"  /> -->
             <!--         </StackPanel> -->
-            <!--     </StackPanel> -->
-            <!--         </ScrollViewer> -->
-            <!-- </TabItem> -->
+            </StackPanel>
+            </ScrollViewer>
+            </TabItem>
             <TabItem  Header="Camera Settings">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
