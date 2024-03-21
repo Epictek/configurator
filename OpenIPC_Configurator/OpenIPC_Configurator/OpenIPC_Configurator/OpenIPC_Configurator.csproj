@@ -17,6 +17,8 @@
         <PackageReference Include="Avalonia.ReactiveUI" Version="$(AvaloniaVersion)"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)"/>
+        <PackageReference Include="Serilog" Version="4.0.0-dev-02122" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="5.1.0-dev-00943" />
         <PackageReference Include="Sini" Version="1.1.1" />
         <PackageReference Include="SSH.NET" Version="2024.0.0" />
         <PackageReference Include="YamlDotNet" Version="15.1.2" />

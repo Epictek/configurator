@@ -1,15 +1,23 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Logging;
 using Avalonia.Markup.Xaml;
 using OpenIPC_Configurator.ViewModels;
 using OpenIPC_Configurator.Views;
+using Serilog;
+using Logger = Serilog.Core.Logger;
 
 namespace OpenIPC_Configurator;
 
 public partial class App : Application
 {
+    public static Logger Logger = new LoggerConfiguration()
+        .WriteTo.Console()
+    .CreateLogger();
+
     public override void Initialize()
     {
+        
         AvaloniaXamlLoader.Load(this);
     }
 

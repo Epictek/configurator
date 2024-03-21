@@ -9,6 +9,7 @@ using System.Windows.Input;
 using OpenIPC_Configurator.Models;
 using ReactiveUI;
 using Renci.SshNet;
+using Renci.SshNet.Common;
 using Sini;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -104,8 +105,24 @@ public class MainViewModel : ViewModelBase
 
     public ICommand FetchCommand { get; }
     public ICommand SaveCommand { get; }
+    
 
-    private bool isLoaded = true;
+    private bool _alertIsVisible;
+    public bool AlertIsVisible
+    {
+        get => _alertIsVisible;
+        set => this.RaiseAndSetIfChanged(ref _alertIsVisible, value);
+    }
+    
+    private string _alertText = "";
+    public string AlertText
+    {
+        get => _alertText;
+        set => this.RaiseAndSetIfChanged(ref _alertText, value);
+    }
+
+    private bool isLoaded = false;
+
     public bool IsLoaded
     {
         get => isLoaded;
@@ -115,9 +132,9 @@ public class MainViewModel : ViewModelBase
     
     public MainViewModel()
     {
-        FetchCommand = ReactiveCommand.Create(() =>
+        FetchCommand = ReactiveCommand.Create(async () =>
         {
-            _ = FetchClicked();
+            await FetchClicked();
         });
         SaveCommand = ReactiveCommand.Create(() =>
         {
@@ -134,16 +151,30 @@ public class MainViewModel : ViewModelBase
 
     async Task FetchClicked()
     {
+        App.Logger.Information("Fetch clicked");
+        AlertIsVisible = false;
+
             var cts = new CancellationTokenSource();
-            var scp = new ScpClient(new ConnectionInfo(IPAddress, USER, new PasswordAuthenticationMethod(USER, PASSWORD)));
-            
+            cts.CancelAfter(TimeSpan.FromSeconds(5));
+            var scp = new ScpClient(
+                new ConnectionInfo(IPAddress, USER, new PasswordAuthenticationMethod(USER, PASSWORD))
+                    { Timeout = TimeSpan.FromSeconds(5), RetryAttempts = 1 });
+
             try
             {
-                await scp.ConnectAsync(cts.Token);
+                App.Logger.Information("Connecting");
+                 await scp.ConnectAsync(cts.Token);
+                App.Logger.Information("Connected");
+
             }
             catch (Exception ex)
             {
-               return; 
+                App.Logger.Error(ex, "error connecting to ssh");
+
+                AlertIsVisible = true;
+                AlertText = "ssh connection failed: " + ex.Message;
+                return;
+ 
             }
             
             try
@@ -151,14 +182,16 @@ public class MainViewModel : ViewModelBase
                 var majesticStream = new MemoryStream();
             
                 scp.Download(MAJESTIC_CONF_LOCATION, majesticStream);
-
+                LoadMajesticYaml(majesticStream);
                 IsLoaded = true;
                 scp.Dispose();
 
             }
             catch (Exception ex)
             {
-                Console.Error.WriteLine(ex) ;
+                App.Logger.Error(ex, "error downloading majestic config");
+                AlertIsVisible = true;
+                AlertText = ex.Message;
             }
     }
 
@@ -174,7 +207,9 @@ public class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            return; 
+            AlertIsVisible = true;
+            AlertText = ex.Message;
+            return;
         }
 
         try
@@ -194,7 +229,8 @@ public class MainViewModel : ViewModelBase
         }
         catch (Exception ex)
         {
-            // ignored
+            AlertIsVisible = true;
+            AlertText = ex.Message;
         }
     }
     

@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
              x:Class="OpenIPC_Configurator.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
+    <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
@@ -20,12 +20,20 @@
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
             </ExperimentalAcrylicBorder.Material>
-
+        <StackPanel>
+        <Border  x:Name="AlertContainer" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                 BorderThickness="1" BorderBrush="rgb(106, 17, 26)" 
+                Background="rgb(67, 12, 17)" CornerRadius="5"
+                Padding="10" Margin="10" 
+                 IsVisible="{Binding AlertIsVisible}">
+            <TextBlock x:Name="AlertText" Text="{Binding AlertText}" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" FontSize="14" />
+        </Border> 
         <StackPanel Orientation="Horizontal" Margin="10">
             <TextBox  Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
             <Button Margin="5" Name="btnGet" Command="{Binding FetchCommand}" Content="Fetch"/>
         <Button Margin="5" Name="btnSend" Command="{Binding SaveCommand}" Content="Upload"/>
-            
+            </StackPanel>
         </StackPanel>
             </ExperimentalAcrylicBorder>
         <ExperimentalAcrylicBorder Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -72,36 +80,6 @@
                     <Label Content="FEC N"/>
                     <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_n}"  />
                 </StackPanel>
- 
-                
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="Power 24:"/> -->
-            <!--             <TextBox Name="txtPower24"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="FECN:"/> -->
-            <!--             <TextBox Name="txtFECN"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="MCS:"/> -->
-            <!--             <TextBox Name="txtMCS"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="FECK:"/> -->
-            <!--             <TextBox Name="txtFECK"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="Frequency 24:"/> -->
-            <!--             <TextBox Name="txtFreq24"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="LDPC:"/> -->
-            <!--             <TextBox Name="txtLDPC"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="STBC:"/> -->
-            <!--             <TextBox Name="txtSTBC"  /> -->
-            <!--         </StackPanel> -->
             </StackPanel>
             </ScrollViewer>
             </TabItem>
