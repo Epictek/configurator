@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
              x:Class="OpenIPC_Configurator.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
+    <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
@@ -20,12 +20,20 @@
             <ExperimentalAcrylicBorder.Material>
                 <ExperimentalAcrylicMaterial TintColor="Black" MaterialOpacity="0.85" TintOpacity="1" />
             </ExperimentalAcrylicBorder.Material>
-
+        <StackPanel>
+        <Border  x:Name="AlertContainer" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                 BorderThickness="1" BorderBrush="rgb(106, 17, 26)" 
+                Background="rgb(67, 12, 17)" CornerRadius="5"
+                Padding="10" Margin="10" 
+                 IsVisible="{Binding AlertIsVisible}">
+            <TextBlock x:Name="AlertText" Text="{Binding AlertText}" HorizontalAlignment="Center"
+                       VerticalAlignment="Center" FontSize="14" />
+        </Border> 
         <StackPanel Orientation="Horizontal" Margin="10">
-            <TextBox Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
+            <TextBox  Margin="5" Name="txtIP"  Width="124" Height="23"  Text="{Binding IPAddress}"/>
             <Button Margin="5" Name="btnGet" Command="{Binding FetchCommand}" Content="Fetch"/>
         <Button Margin="5" Name="btnSend" Command="{Binding SaveCommand}" Content="Upload"/>
-            
+            </StackPanel>
         </StackPanel>
             </ExperimentalAcrylicBorder>
         <ExperimentalAcrylicBorder Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
@@ -33,56 +41,55 @@
                 <ExperimentalAcrylicMaterial TintColor="#222222" MaterialOpacity="0.85" TintOpacity="1" />
             </ExperimentalAcrylicBorder.Material>
 
-        <TabControl Grid.Row="1" Name="TabControl1">
-            <!-- <TabItem Header="WFB Settings"> -->
-            <!--     <ScrollViewer VerticalScrollBarVisibility="Auto"> -->
-            <!--         <StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="Frequency:"/> -->
-            <!--             <TextBox Name="txtFreq"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="Power 24:"/> -->
-            <!--             <TextBox Name="txtPower24"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="FECN:"/> -->
-            <!--             <TextBox Name="txtFECN"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="MCS:"/> -->
-            <!--             <TextBox Name="txtMCS"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="FECK:"/> -->
-            <!--             <TextBox Name="txtFECK"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="Frequency 24:"/> -->
-            <!--             <TextBox Name="txtFreq24"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="LDPC:"/> -->
-            <!--             <TextBox Name="txtLDPC"  /> -->
-            <!--         </StackPanel> -->
-            <!--         <StackPanel Margin="5"> -->
-            <!--             <Label Content="STBC:"/> -->
-            <!--             <TextBox Name="txtSTBC"  /> -->
-            <!--         </StackPanel> -->
-            <!--     </StackPanel> -->
-            <!--         </ScrollViewer> -->
-            <!-- </TabItem> -->
-            <TabItem Header="Camera Settings">
+        <TabControl IsVisible="{Binding IsLoaded}" Grid.Row="1" Name="TabControl1">
+            <TabItem Header="WiFi Settings">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+            <StackPanel Margin="5">
+                <Label Content="5.8GHz Frequency:"/>
+            <ComboBox HorizontalAlignment="Stretch" SelectedValueBinding="{Binding Value}" SelectedValue="{Binding WfbConfig.frequency, Mode=TwoWay}" ItemsSource="{Binding Frequencies}" DisplayMemberBinding="{Binding Key}"/>
+            </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="5.8GHz TX Power:"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_k}"  />
+                </StackPanel>
+ 
+                <StackPanel Margin="5">
+                    <Label Content="2.4GHz Frequency:"/>
+                    <ComboBox HorizontalAlignment="Stretch" SelectedValueBinding="{Binding Value}" SelectedValue="{Binding WfbConfig.driver_txpower_override, Mode=TwoWay}" ItemsSource="{Binding Frequencies}" DisplayMemberBinding="{Binding Key}"/>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="2.4GHz TX Power:"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_k}"  />
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="MCS INDEX:"/>
+                    <NumericUpDown Increment="1" Maximum="9" Minimum="0" Value="{Binding WfbConfig.mcs_index}"  />
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <CheckBox IsChecked="{Binding WfbConfig.stbc}">STBC</CheckBox>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <CheckBox IsChecked="{Binding WfbConfig.ldpc}">LDPC</CheckBox>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="FEC K"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_k}"  />
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <Label Content="FEC N"/>
+                    <NumericUpDown Increment="1" Maximum="12" Minimum="1" Value="{Binding WfbConfig.fec_n}"  />
+                </StackPanel>
+            </StackPanel>
+            </ScrollViewer>
+            </TabItem>
+            <TabItem  Header="Camera Settings">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                     <StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Resolution:"/>
-                        <ComboBox HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Size}" Name="txtResolution" >
-                            <ComboBoxItem>1280x720</ComboBoxItem>
-                            <ComboBoxItem>1920x1080</ComboBoxItem>
-                            <ComboBoxItem>3200x1800</ComboBoxItem>
-                            <ComboBoxItem>3840x2160</ComboBoxItem>
-                            </ComboBox>
+                        <ComboBox ItemsSource="{Binding Resolutions}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Size, Mode=TwoWay}" Name="txtResolution" >
+                        </ComboBox>
                     </StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Sensor:"/> -->
@@ -98,9 +105,7 @@
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Encode:"/>
-                        <ComboBox HorizontalAlignment="Stretch" Name="cmbCodec" SelectedValue="{Binding MajesticConfig.Video0.Codec}">
-                            <ComboBoxItem Content="h264"/>
-                            <ComboBoxItem Content="h265"/>
+                        <ComboBox ItemsSource="{Binding Codecs}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Codec, Mode=TwoWay}">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
@@ -109,25 +114,12 @@
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Bitrate:"/>
-                        <ComboBox SelectedValueBinding="Content" SelectedItem="{Binding MajesticConfig.Video0.Bitrate, Mode=TwoWay}" HorizontalAlignment="Stretch">
-                            <ComboBoxItem Content="1024" />
-                            <ComboBoxItem Content="2048"/>
-                            <ComboBoxItem Content="3072"/>
-                            <ComboBoxItem Content="4096"/>
-                            <ComboBoxItem Content="5120"/>
-                            <ComboBoxItem Content="6144"/>
-                            <ComboBoxItem Content="7168"/>
-                            <ComboBoxItem Content="8192"/>
-                            <ComboBoxItem Content="9216"/>
-                            <ComboBoxItem Content="10240"/>
-                            <ComboBoxItem Content="11264"/>
-                            <ComboBoxItem Content="12288"/>
-                            <ComboBoxItem Content="13312"/>
+                        <ComboBox ItemsSource="{Binding BitRates}" SelectedValue="{Binding MajesticConfig.Video0.Bitrate, Mode=TwoWay}" HorizontalAlignment="Stretch">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Hue:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}" Name="txtHue"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}"/>
                     </StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Exposure:"/> -->
@@ -135,7 +127,7 @@
                     <!-- </StackPanel> -->
                     <StackPanel Margin="5">
                         <Label Content="Contrast:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}" Name="txtContrast"  />
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}"/>
                     </StackPanel>
                         </StackPanel>
                 </ScrollViewer>

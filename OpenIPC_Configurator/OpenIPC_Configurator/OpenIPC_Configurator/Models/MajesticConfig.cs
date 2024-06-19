@@ -8,7 +8,7 @@ public class MajesticConfig
         public SystemConfig System { get; set; }
         public IspConfig Isp { get; set; }
         public ImageConfig Image { get; set; }
-        public VideoConfig Video0 { get; set; }
+        public VideoConfig Video0 { get; set; } 
         public VideoConfig Video1 { get; set; }
         public JpegConfig Jpeg { get; set; }
         public OsdConfig Osd { get; set; }

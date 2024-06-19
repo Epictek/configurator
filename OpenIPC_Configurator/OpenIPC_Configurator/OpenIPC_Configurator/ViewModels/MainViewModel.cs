@@ -97,7 +97,7 @@ public class MainViewModel : ViewModelBase
         {
 
             var majesticStream = File.OpenRead("majestic.yaml");
-            FlattenYamlObject(majesticStream);
+            LoadMajesticYaml(majesticStream);
 
         }
         catch (Exception ex)
@@ -126,6 +126,14 @@ public class MainViewModel : ViewModelBase
         // Deserialize YAML to object
         using var reader = new StreamReader(stream);
         MajesticConfig = deserializer.Deserialize<MajesticConfig>(reader);
+        // if (MajesticConfigDynamic == null)
+        // {
+        //     MajesticConfigDynamic = new Dictionary<string, object>();
+        //     MajesticConfig = new MajesticConfig();
+        //     return;
+        // }
+        //
+        // MajesticConfig = MajesticConfigDynamic.ToObject<MajesticConfig>();
 
     }
 
@@ -137,37 +145,11 @@ public class MainViewModel : ViewModelBase
             .Build();
 
         MajesticConfigDynamic["derp"] = "derp";
-
+        
         return serializer.Serialize(MajesticConfigDynamic);
 
     }
 
-    private void FlattenYamlObject(Dictionary<string, string> result, object yamlObject, string parentKey)
-    {
-        if (yamlObject is Dictionary<object, object> dict)
-        {
-            foreach (var entry in dict)
-            {
-                var key = parentKey + "." + entry.Key.ToString().ToLowerInvariant();
-                if (entry.Value != null)
-                {
-                    if (entry.Value is Dictionary<object, object>)
-                    {
-                        FlattenYamlObject(result, entry.Value, key);
-                    }
-                    else
-                    {
-                        result[key.TrimStart('.')] = entry.Value.ToString();
-                    }
-                }
-            }
-        }
-        else
-        {
-            throw new ArgumentException("YAML structure is not valid.");
-        }
-    }
-    
     void LoadWfbConf()
     {
        WfbConfig  = IniFile.ToObject<WfbConfig>("wfb.conf", IniFile.ParseObjectFlags.AllowAdditionalKeys | IniFile.ParseObjectFlags.AllowMissingFields | IniFile.ParseObjectFlags.LowercaseKeysAndSections);
