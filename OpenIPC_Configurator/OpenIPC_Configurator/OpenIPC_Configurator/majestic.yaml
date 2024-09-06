@@ -20,11 +20,11 @@ video0:
   fps: 20
   bitrate: 4096
   rcMode: vbr
+  size: 704x576
   gopSize: 1
 video1:
   enabled: false
   codec: h264
-  size: 704x576
   fps: 15
 jpeg:
   enabled: true

@@ -88,46 +88,46 @@
                     <StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Resolution:"/>
-                        <ComboBox ItemsSource="{Binding Resolutions}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Size, Mode=TwoWay}" Name="txtResolution" >
+                        <ComboBox ItemsSource="{Binding Resolutions}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfigDynamic[video0.size], Mode=TwoWay}" Name="txtResolution" >
                         </ComboBox>
                     </StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Sensor:"/> -->
-                    <!--     <TextBox Name="txtSensor" Text="{Binding MajesticConfig.Video0}"/> -->
+                    <!--     <TextBox Name="txtSensor" Text="{Binding MajesticConfigDynamic[Video0}"/> -->
                     <!-- </StackPanel> -->
                     <StackPanel Margin="5">
                         <Label Content="FPS:"/>
-                        <NumericUpDown Increment="10" Maximum="120" Minimum="20" Value="{Binding MajesticConfig.Video0.Fps}"  />
+                        <NumericUpDown Increment="10" Maximum="120" Minimum="20" Value="{Binding MajesticConfigDynamic[video0.fps]}"  />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Luminance:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Luminance}" />
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfigDynamic[image.luminance]}" />
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Encode:"/>
-                        <ComboBox ItemsSource="{Binding Codecs}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfig.Video0.Codec, Mode=TwoWay}">
+                        <ComboBox ItemsSource="{Binding Codecs}" HorizontalAlignment="Stretch" SelectedValue="{Binding MajesticConfigDynamic[Video0.Codec], Mode=TwoWay}">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Saturation:"/>
-                        <NumericUpDown Value="{Binding MajesticConfig.Image.Saturation}" Name="txtSaturation"/>
+                        <NumericUpDown Value="{Binding MajesticConfigDynamic[image.saturation]}" Name="txtSaturation"/>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Bitrate:"/>
-                        <ComboBox ItemsSource="{Binding BitRates}" SelectedValue="{Binding MajesticConfig.Video0.Bitrate, Mode=TwoWay}" HorizontalAlignment="Stretch">
+                        <ComboBox ItemsSource="{Binding BitRates}" SelectedValue="{Binding MajesticConfigDynamic[video0.bitrate], Mode=TwoWay}" HorizontalAlignment="Stretch">
                         </ComboBox>
                     </StackPanel>
                     <StackPanel Margin="5">
                         <Label Content="Hue:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Hue}"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfigDynamic[image.hue], Mode=TwoWay}"/>
                     </StackPanel>
                     <!-- <StackPanel Margin="5"> -->
                     <!--     <Label Content="Exposure:"/> -->
-                    <!--     <NumericUpDown Increment="10" Maximum="100" Minimum="0" Name="txtExposure" Value="{Binding MajesticConfig.Image.ex}" /> -->
+                    <!--     <NumericUpDown Increment="10" Maximum="100" Minimum="0" Name="txtExposure" Value="{Binding MajesticConfigDynamic[Image.ex}" /> -->
                     <!-- </StackPanel> -->
                     <StackPanel Margin="5">
                         <Label Content="Contrast:"/>
-                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfig.Image.Contrast}"/>
+                        <NumericUpDown Increment="10" Maximum="100" Minimum="0" Value="{Binding MajesticConfigDynamic[Image.Contrast], Mode=TwoWay}"/>
                     </StackPanel>
                         </StackPanel>
                 </ScrollViewer>

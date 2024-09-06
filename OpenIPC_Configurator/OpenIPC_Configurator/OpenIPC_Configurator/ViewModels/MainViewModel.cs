@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using OpenIPC_Configurator.Helpers;
 using OpenIPC_Configurator.Models;
 using ReactiveUI;
 using Renci.SshNet;
@@ -17,16 +18,43 @@ namespace OpenIPC_Configurator.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    public Dictionary<string, object> MajesticConfigDynamic { get; set; }
     
     
-    private MajesticConfig? _majesticConfig = null;
-    public MajesticConfig? MajesticConfig
-    {
-        get => _majesticConfig;
-        set => this.RaiseAndSetIfChanged(ref _majesticConfig, value);
-    }
+    public int[] BitRates { get; } =
+    [
+        1024,
+        2048,
+        3072,
+        4096,
+        5120,
+        6144,
+        7168,
+        8192,
+        9216,
+        10240,
+        11264,
+        12288,
+        13312
+    ];
 
+    public string[] Resolutions { get; } =
+    [
+        "1280x720",
+        "1920x1080",
+        "3200x1800",
+        "3840x2160"
+    ];
+
+    public string[] Codecs { get; } = ["h264", "h265"];
+
+    
+    private Dictionary<string, string> _majesticConfigDynamic = new Dictionary<string, string>();
+    public Dictionary<string, string> MajesticConfigDynamic
+    {
+        get => _majesticConfigDynamic;
+        set => this.RaiseAndSetIfChanged(ref _majesticConfigDynamic, value);
+    }
+    
     
     
     public WfbConfig WfbConfig { get; set; }
@@ -97,7 +125,8 @@ public class MainViewModel : ViewModelBase
         {
 
             var majesticStream = File.OpenRead("majestic.yaml");
-            LoadMajesticYaml(majesticStream);
+            MajesticConfigDynamic = YamlReader.ReadYamlToDictionary(majesticStream);
+            // LoadMajesticYaml(majesticStream);
 
         }
         catch (Exception ex)
@@ -117,23 +146,15 @@ public class MainViewModel : ViewModelBase
     
     void LoadMajesticYaml(Stream stream)
     {
-        stream.Position = 0;
-        var deserializer = new DeserializerBuilder()
-            .WithNamingConvention(CamelCaseNamingConvention.Instance)
-            .IgnoreUnmatchedProperties()
-            .Build();
-
-        // Deserialize YAML to object
-        using var reader = new StreamReader(stream);
-        MajesticConfig = deserializer.Deserialize<MajesticConfig>(reader);
-        // if (MajesticConfigDynamic == null)
-        // {
-        //     MajesticConfigDynamic = new Dictionary<string, object>();
-        //     MajesticConfig = new MajesticConfig();
-        //     return;
-        // }
+        // stream.Position = 0;
+        // var deserializer = new DeserializerBuilder()
+        //     .WithNamingConvention(CamelCaseNamingConvention.Instance)
+        //     .IgnoreUnmatchedProperties()
+        //     .Build();
         //
-        // MajesticConfig = MajesticConfigDynamic.ToObject<MajesticConfig>();
+        // // Deserialize YAML to object
+        // using var reader = new StreamReader(stream);
+        // MajesticConfig = deserializer.Deserialize<MajesticConfig>(reader);
 
     }
 
